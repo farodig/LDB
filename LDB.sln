@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LDBLibrary", "LDBLibrary\LDBLibrary.csproj", "{15CF642B-FA02-4F43-8AE6-3EB8DF956EE6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LDBUnitTests", "LDBUnitTests\LDBUnitTests.csproj", "{03F1E685-BCE5-4C91-BE83-440CB220074F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LDB.DB", "LDB.DB\LDB.DB.csproj", "{55D8D5AF-157A-412D-8E4D-599821209F18}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{15CF642B-FA02-4F43-8AE6-3EB8DF956EE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15CF642B-FA02-4F43-8AE6-3EB8DF956EE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15CF642B-FA02-4F43-8AE6-3EB8DF956EE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03F1E685-BCE5-4C91-BE83-440CB220074F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03F1E685-BCE5-4C91-BE83-440CB220074F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03F1E685-BCE5-4C91-BE83-440CB220074F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03F1E685-BCE5-4C91-BE83-440CB220074F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55D8D5AF-157A-412D-8E4D-599821209F18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55D8D5AF-157A-412D-8E4D-599821209F18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55D8D5AF-157A-412D-8E4D-599821209F18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55D8D5AF-157A-412D-8E4D-599821209F18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
