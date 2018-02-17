@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("LDB.DB")]
+[assembly: AssemblyTitle("LDB.ExampleDB")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("LDB.DB")]
+[assembly: AssemblyProduct("LDB.ExampleDB")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("55d8d5af-157a-412d-8e4d-599821209f18")]
+[assembly: Guid("56accc39-1d59-4119-ba4f-6216cc8cc210")]
 
 // Сведения о версии сборки состоят из следующих четырех значений:
 //

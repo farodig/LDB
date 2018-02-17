@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace LDBUnitTests
+namespace LDB.UnitTests
 {
     [TestClass]
     public class UnitTest1

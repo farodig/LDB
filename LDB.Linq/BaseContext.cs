@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LDBLibrary
+namespace LDB.Linq
 {
-    public class XmlContext : BaseContext
+    public class BaseContext
     {
     }
 }
