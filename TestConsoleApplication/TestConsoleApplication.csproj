@@ -4,15 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{913AC2F7-D877-425E-8C7A-5B8139A12295}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LDB.Linq</RootNamespace>
-    <AssemblyName>LDB.Linq</AssemblyName>
+    <ProjectGuid>{E7F4C63C-592F-4DAB-A784-714D9CBDCBE0}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>TestConsoleApplication</RootNamespace>
+    <AssemblyName>TestConsoleApplication</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +22,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -40,11 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\DataTypeEnum.cs" />
-    <Compile Include="Enums\PositionTypeEnum.cs" />
-    <Compile Include="LocalContext.cs" />
-    <Compile Include="LocalTable.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LDB.ExampleDB\LDB.ExampleDB.csproj">
+      <Project>{56ACCC39-1D59-4119-BA4F-6216CC8CC210}</Project>
+      <Name>LDB.ExampleDB</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

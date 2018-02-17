@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LDB.Linq
+namespace LDB.Linq.Enums
 {
-    public class XmlContext : BaseContext
+    internal enum DataTypeEnum
     {
+        JSON,
+        XML,
+        CSV
     }
 }

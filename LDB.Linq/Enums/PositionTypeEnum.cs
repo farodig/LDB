@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LDB.Linq
+namespace LDB.Linq.Enums
 {
-    public class BaseContext
+    internal enum PositionTypeEnum
     {
+        Relative,
+        Absolute
     }
 }

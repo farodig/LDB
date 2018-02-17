@@ -1,4 +1,5 @@
-﻿using LDB.Linq;
+﻿using LDB.ExampleDB.Model;
+using LDB.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace LDB.ExampleDB
 {
-    public class MyJsonContext : JsonContext
+    public class MyJsonContext : LocalContext
     {
-        public MyJsonContext()
-        {
-        }
+        public MyJsonContext() : base() { }
+        public MyJsonContext(string connectionString) : base(connectionString) => throw new NotImplementedException();
+
+        public List<Test> Tests { get; set; }
     }
 }

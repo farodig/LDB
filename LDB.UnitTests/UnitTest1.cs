@@ -1,4 +1,6 @@
 ﻿using System;
+using LDB.ExampleDB;
+using LDB.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LDB.UnitTests
@@ -9,6 +11,9 @@ namespace LDB.UnitTests
         [TestMethod]
         public void TestMethod1()
         {
+            //LocalContext target = new LocalContext();
+            //PrivateObject obj = new PrivateObject(target);
+            //var retVal = obj.Invoke("ParseConnectionString");
         }
     }
 }
