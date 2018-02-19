@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LDB.ExampleDB.Model
+namespace TestConsoleApplication.Model
 {
     public class Test : LocalTable
     {
@@ -18,7 +18,7 @@ namespace LDB.ExampleDB.Model
             get { return _name; }
             set { SetProperty(nameof(Name), ref _name, value); }
         }
-        
+
         public int Code
         {
             get { return _code; }

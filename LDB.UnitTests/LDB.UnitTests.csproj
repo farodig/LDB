@@ -48,18 +48,14 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseContextTest.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="LocalContextTests.cs" />
+    <Compile Include="DbSetTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LDB.ExampleDB\LDB.ExampleDB.csproj">
-      <Project>{56ACCC39-1D59-4119-BA4F-6216CC8CC210}</Project>
-      <Name>LDB.ExampleDB</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LDB.Linq\LDB.Linq.csproj">
       <Project>{913AC2F7-D877-425E-8C7A-5B8139A12295}</Project>
       <Name>LDB.Linq</Name>

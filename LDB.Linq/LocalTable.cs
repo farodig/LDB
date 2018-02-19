@@ -11,7 +11,6 @@ namespace LDB.Linq
         public void SetProperty<T>(string name, ref T field, T value)
         {
             field = value;
-            
         }
     }
 }

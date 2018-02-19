@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Model\Test.cs" />
+    <Compile Include="MyJsonContext.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -49,9 +51,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LDB.ExampleDB\LDB.ExampleDB.csproj">
-      <Project>{56ACCC39-1D59-4119-BA4F-6216CC8CC210}</Project>
-      <Name>LDB.ExampleDB</Name>
+    <ProjectReference Include="..\LDB.Linq\LDB.Linq.csproj">
+      <Project>{913AC2F7-D877-425E-8C7A-5B8139A12295}</Project>
+      <Name>LDB.Linq</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

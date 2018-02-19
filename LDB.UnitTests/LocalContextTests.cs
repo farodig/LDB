@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace LDB.UnitTests
 {
     [TestClass]
-    public class BaseContextTest
+    public class LocalContextTests
     {
         [TestMethod]
         public void ParseConnectionString()
