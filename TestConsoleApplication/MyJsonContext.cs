@@ -8,9 +8,10 @@ using TestConsoleApplication.Model;
 
 namespace TestConsoleApplication
 {
-    public class MyJsonContext : LocalContext
+    public class MyJsonContext : LContext
     {
         public DbSet<Test> Tmp = new DbSet<Test>();
+        //public List<Test> Tmp2 = new DbSet<Test>();
 
         public List<Test> _tests;
         public List<Test> Tests

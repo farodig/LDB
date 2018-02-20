@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LDB.Linq
 {
-    public class LocalTable
+    public class LTable
     {
         public void SetProperty<T>(string name, ref T field, T value)
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TestConsoleApplication.Model
 {
-    public class Test : LocalTable
+    public class Test : LTable
     {
 
         private string _name;

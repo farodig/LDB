@@ -14,7 +14,7 @@ namespace LDB.UnitTests
         [TestMethod]
         public void ParseConnectionString()
         {
-            LocalContext target = new LocalContext();
+            LContext target = new LContext();
             PrivateObject obj = new PrivateObject(target);
             var retVal = obj.Invoke("ParseConnectionString", "path:Data;position:relative;type:json");
         }

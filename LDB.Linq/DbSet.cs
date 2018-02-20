@@ -1,6 +1,8 @@
-﻿using System;
+﻿using LDB.Linq.Converters;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,9 +34,22 @@ namespace LDB.Linq
             //throw new NotImplementedException();
         }
 
-        public void SetDbFile(string name) => DbPath = name;
+        public void SetDbPath(string path)
+        {
+            var fullName = Path.Combine(path, nameof(T));
+            if (File.Exists(fullName))
+                DbPath = fullName;
+            else
+                throw new Exception($"File {fullName} not found");
+        }
+
+        public void SetDbConverter(IConverter converter)
+        {
+            Converter = converter;
+        }
 
         private string DbPath;
+        private IConverter Converter;
 
         #endregion
 
@@ -151,6 +166,12 @@ namespace LDB.Linq
             //Items.geten
             throw new NotImplementedException();
         }
+
+        //public static implicit operator List<T>(DbSet<T> items)
+        //{
+        //    //items.ToList();
+        //    throw new NotImplementedException();
+        //}
         #endregion
     }
 }

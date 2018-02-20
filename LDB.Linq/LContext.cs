@@ -8,10 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Web.Script.Serialization;
+using System.Runtime.Serialization.Json;
 
 namespace LDB.Linq
 {
-    public class LocalContext : IDisposable
+    public class LContext : IDisposable
     {
         /// <summary>
         /// Path to data files (default: LocalDB)
@@ -28,13 +30,26 @@ namespace LDB.Linq
         /// </summary>
         private DataTypeEnum Type;
 
+        //https://stackoverflow.com/questions/18242429/how-to-deserialize-json-data
+        //https://msdn.microsoft.com/en-us/library/system.web.script.serialization.javascriptserializer.aspx
+        // System.Runtime.Serialization.Json
+        // System.Web.Script.Serialization
         // TODO: Add parameter IsReadOnly
         // TODO: Add parameter SaveAtOnce
 
         /// <summary>
         /// Default parameters
         /// </summary>
-        public LocalContext()
+        /// <summary xml:lang="ru">
+        /// Параметры по умолчанию
+        /// </summary>
+        /// <summary xml:lang="ru-RU">
+        /// Параметры по умолчанию 1
+        /// </summary>
+        /// <summary xml:lang="fr">
+        /// Obtient ou définit la taille de remplissage de l'opération de chargement.
+        /// </summary>
+        public LContext()
         {
             SetDefaultValues();
             //https://stackoverflow.com/questions/7299097/dynamically-replace-the-contents-of-a-c-sharp-method
@@ -44,7 +59,7 @@ namespace LDB.Linq
         /// <summary>
         /// Custom parameters
         /// </summary>
-        public LocalContext(string connectionString)
+        public LContext(string connectionString)
         {
             SetDefaultValues();
 
@@ -115,57 +130,20 @@ namespace LDB.Linq
 
         protected void SetTable<T>(ref List<T> table, List<T> value)
         {
-            WriteTable(value);
-            table = value;
+            //WriteTable(value);
+            //WriteJson(value);
+            //table = value;
         }
 
         protected List<T> GetTable<T>(ref List<T> table)
         {
-            table = ReadTable<T>("");
-            return table;
+            //table = ReadTable<T>("");
+            //return table;
+            return null;
         }
 
         public virtual void Dispose()
         {
-        }
-
-        private List<T> ReadTable<T>(string name)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
-            var filename = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "test.xml");
-            using (FileStream fs = new FileStream(filename, FileMode.OpenOrCreate))
-            {
-
-                using (XmlReader reader = XmlReader.Create(fs))
-                {
-                    return (List<T>)serializer.Deserialize(reader);//, "utf-8");
-                    //serializer.Serialize(reader, table);
-                }
-
-                //serializer.Deserialize()
-            }
-            //XmlSerializer serializer = ;
-            //DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(User));
-            //throw new NotImplementedException();
-        }
-
-        private void WriteTable<T>(List<T> table)
-        {
-            XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
-            var filename = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "test.xml");
-            using (FileStream fs = new FileStream(filename, FileMode.OpenOrCreate))
-            {
-
-                using (XmlWriter writer = XmlWriter.Create(fs))
-                {
-                    serializer.Serialize(writer, table);
-                }
-                    
-                //serializer.Deserialize()
-            }
-                
-            //if (!=)
-            //throw new NotImplementedException();
         }
     }
 }
