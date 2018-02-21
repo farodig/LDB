@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\BinConverter.cs" />
     <Compile Include="Converters\CsvConverter.cs" />
     <Compile Include="Converters\IConverter.cs" />
     <Compile Include="Converters\JsonConverter.cs" />

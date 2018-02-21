@@ -10,6 +10,7 @@ namespace LDB.Linq.Enums
     {
         JSON,
         XML,
-        CSV
+        CSV, 
+        BIN
     }
 }

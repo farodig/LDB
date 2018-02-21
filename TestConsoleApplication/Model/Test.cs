@@ -7,22 +7,25 @@ using System.Threading.Tasks;
 
 namespace TestConsoleApplication.Model
 {
-    public class Test : LTable
+    public class Test : LTable, ITable
     {
+        public int Code { get; set; }
 
-        private string _name;
-        private int _code;
+        public string Name { get; set; }
 
-        public string Name
-        {
-            get { return _name; }
-            set { SetProperty(nameof(Name), ref _name, value); }
-        }
+        //private string _name;
+        //private int _code;
 
-        public int Code
-        {
-            get { return _code; }
-            set { SetProperty(nameof(Code), ref _code, value); }
-        }
+        //public string Name
+        //{
+        //    get { return _name; }
+        //    set { SetProperty(nameof(Name), ref _name, value); }
+        //}
+
+        //public int Code
+        //{
+        //    get { return _code; }
+        //    set { SetProperty(nameof(Code), ref _code, value); }
+        //}
     }
 }

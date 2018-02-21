@@ -10,10 +10,11 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Web.Script.Serialization;
 using System.Runtime.Serialization.Json;
+using LDB.Linq.Converters;
 
 namespace LDB.Linq
 {
-    public class LContext : IDisposable
+    public class LContext// : IDisposable
     {
         /// <summary>
         /// Path to data files (default: LocalDB)
@@ -53,7 +54,8 @@ namespace LDB.Linq
         {
             SetDefaultValues();
             //https://stackoverflow.com/questions/7299097/dynamically-replace-the-contents-of-a-c-sharp-method
-            ReplaceGetters();
+            //ReplaceGetters();
+            InitDbSet();
         }
 
         /// <summary>
@@ -65,15 +67,75 @@ namespace LDB.Linq
 
             ParseConnectionString(connectionString);
 
+            InitDbSet();
             //https://stackoverflow.com/questions/7299097/dynamically-replace-the-contents-of-a-c-sharp-method
-            ReplaceGetters();
+            //ReplaceGetters();
         }
 
         private void SetDefaultValues()
         {
-            Path = "LocalDB";
+            Path = "Data";
             Position = PositionTypeEnum.Relative;
             Type = DataTypeEnum.JSON;
+        }
+
+        private string FileType => Type.ToString().ToLower();
+
+        private string FilePath {
+            get
+            {
+                switch(Position)
+                {
+                    case PositionTypeEnum.Absolute: return Path;
+                    case PositionTypeEnum.Relative: return System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Path); ;
+                    default: return Path;
+                }
+            }
+        }
+
+        private void InitDbSet()
+        {
+            IConverter converter;
+            switch(Type)
+            {
+                case DataTypeEnum.BIN:
+                    converter = new BinConverter();
+                    break;
+                case DataTypeEnum.CSV:
+                    converter = new CsvConverter();
+                    break;
+                case DataTypeEnum.JSON:
+                    converter = new JsonConverter();
+                    break;
+                case DataTypeEnum.XML:
+                    converter = new XmlConverter();
+                    break;
+                default:
+                    converter = new XmlConverter();
+                    break;
+            }
+            var props = GetType().GetProperties();//.Select(a => a.GetType()).ToList() ;
+            foreach(var prop in props)
+            {
+                //if (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>))
+                //{
+                //    var value = prop.GetValue(this);
+                //    // Коллекция
+                    
+                //}
+                if (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>))
+                {
+                    var value = prop.GetValue(this);
+                    value.GetType().GetMethod("SetDbPath").Invoke(value, new object[] { FilePath, FileType });
+                    value.GetType().GetMethod("SetDbConverter").Invoke(value, new object[] { converter });
+                    //var tmp = Convert.ChangeType(value, typeof(DbSet<LTable>));
+                    //.Cast<DbSet<LTable>>();//.ToList();
+                    //var items = ((IEnumerable)
+                    //paramDictionary.Add(prop.Name, string.Join(", ", items.Select(a => a.GetType().GetProperty("Oid").GetValue(a).ToString()).ToList()));
+
+                }
+            }
+
         }
 
         private void ParseConnectionString(string connectionString)
@@ -119,31 +181,34 @@ namespace LDB.Linq
             }
         }
 
-        private void ReplaceGetters()
-        {
-            //var properties = GetType().GetProperties().ToList();//.Where(a => a.PropertyType is typeof(List<LocalTable>))//BindingFlags.Public | BindingFlags.GetProperty
-            //foreach (var prop in properties)
-            //{
-            //    var tmp1 = prop.PropertyType;
-            //}
-        }
 
-        protected void SetTable<T>(ref List<T> table, List<T> value)
-        {
-            //WriteTable(value);
-            //WriteJson(value);
-            //table = value;
-        }
+        
 
-        protected List<T> GetTable<T>(ref List<T> table)
-        {
-            //table = ReadTable<T>("");
-            //return table;
-            return null;
-        }
+        //private void ReplaceGetters()
+        //{
+        //    //var properties = GetType().GetProperties().ToList();//.Where(a => a.PropertyType is typeof(List<LocalTable>))//BindingFlags.Public | BindingFlags.GetProperty
+        //    //foreach (var prop in properties)
+        //    //{
+        //    //    var tmp1 = prop.PropertyType;
+        //    //}
+        //}
 
-        public virtual void Dispose()
-        {
-        }
+        //protected void SetTable<T>(ref List<T> table, List<T> value)
+        //{
+        //    //WriteTable(value);
+        //    //WriteJson(value);
+        //    //table = value;
+        //}
+
+        //protected List<T> GetTable<T>(ref List<T> table)
+        //{
+        //    //table = ReadTable<T>("");
+        //    //return table;
+        //    return null;
+        //}
+
+        //public virtual void Dispose()
+        //{
+        //}
     }
 }

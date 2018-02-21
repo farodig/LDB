@@ -13,7 +13,8 @@ namespace LDB.Linq
     /// Init table
     /// </summary>
     /// <typeparam name="T">Table</typeparam>
-    public class DbSet<T> : IList<T>
+    public class DbSet<T> : IList<T> 
+        //where T : LTable, new()
     {
         #region Local data base
         private List<T> _items;
@@ -30,17 +31,21 @@ namespace LDB.Linq
 
         private List<T> LoadData()
         {
-            return new List<T>();
-            //throw new NotImplementedException();
+            return Converter.Deserialize<List<T>>(DbPath);
         }
 
-        public void SetDbPath(string path)
+        public void SetDbPath(string path, string extension)
         {
-            var fullName = Path.Combine(path, nameof(T));
-            if (File.Exists(fullName))
+            
+            var name = typeof(T).Name + "." + extension;// 
+            var fullName = Path.Combine(path, name);
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+            if (!File.Exists(fullName))
+                File.Create(fullName).Close();
                 DbPath = fullName;
-            else
-                throw new Exception($"File {fullName} not found");
+            //else
+            //    throw new Exception($"File {fullName} not found");
         }
 
         public void SetDbConverter(IConverter converter)
@@ -75,14 +80,7 @@ namespace LDB.Linq
         /// <summary>
         /// Get count of items collection
         /// </summary>
-        public int Count
-        {
-            get
-            {
-                Items.Count();
-                throw new NotImplementedException();
-            }
-        }
+        public int Count => Items.Count();
 
         /// <summary>
         /// Is this collection not writable?
@@ -102,7 +100,8 @@ namespace LDB.Linq
         public void Add(T item)
         {
             Items.Add(item);
-            throw new NotImplementedException();
+            Converter.Serialize(DbPath, Items);
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -111,7 +110,7 @@ namespace LDB.Linq
         public void Clear()
         {
             Items.Clear();
-            throw new NotImplementedException();
+            Converter.Serialize(DbPath, Items);
         }
 
         /// <summary>
@@ -119,29 +118,20 @@ namespace LDB.Linq
         /// </summary>
         /// <param name="item">searched item</param>
         /// <returns>result</returns>
-        public bool Contains(T item)
-        {
-            Items.Contains(item);
-            throw new NotImplementedException();
-        }
+        public bool Contains(T item) => Items.Contains(item);
 
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            Items.CopyTo(array, arrayIndex);
-            throw new NotImplementedException();
-        }
+        public void CopyTo(T[] array, int arrayIndex) => Items.CopyTo(array, arrayIndex);
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            Items.GetEnumerator();
-            throw new NotImplementedException();
-        }
+        public IEnumerator<T> GetEnumerator() => Items.GetEnumerator();
+        //{
+        //    foreach(var item in Items)
+        //    {
+        //        yield return item;
+        //    }
+        //}
+        //=> Items.GetEnumerator();
 
-        public int IndexOf(T item)
-        {
-            Items.IndexOf(item);
-            throw new NotImplementedException();
-        }
+        public int IndexOf(T item) => Items.IndexOf(item);
 
         public void Insert(int index, T item)
         {
