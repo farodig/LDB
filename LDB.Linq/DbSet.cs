@@ -20,7 +20,7 @@ namespace LDB.Linq
         private string DbPath;
         private IConverter Converter;
 
-        // TODO: Add IsReadOnly logic this[int index], 
+        // TODO: Add IsReadOnly logic
         private bool _isReadOnly = false;
         
         // Autoload collection
