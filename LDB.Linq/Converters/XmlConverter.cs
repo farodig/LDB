@@ -11,19 +11,26 @@ namespace LDB.Linq.Converters
 {
     internal class XmlConverter : IConverter
     {
-        public T Deserialize<T>(string file)
+        public T Deserialize<T>(string file) where T : new()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             using (FileStream fs = new FileStream(file, FileMode.OpenOrCreate))
             {
                 using (XmlReader reader = XmlReader.Create(fs))
                 {
-                    return (T)serializer.Deserialize(reader);
+                    if (fs.Length == 0)
+                    {
+                        return new T();
+                    } else
+                    {
+                        return (T)serializer.Deserialize(reader);
+                    }
+                    
                 }
             }
         }
 
-        public void Serialize<T>(string file, T data)
+        public void Serialize<T>(string file, T data) where T : new()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(T));
             using (FileStream fs = new FileStream(file, FileMode.OpenOrCreate))

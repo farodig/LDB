@@ -8,8 +8,8 @@ namespace LDB.Linq.Converters
 {
     public interface IConverter
     {
-        void Serialize<T>(string file, T data);
+        void Serialize<T>(string file, T data) where T : new();
 
-        T Deserialize<T>(string file);
+        T Deserialize<T>(string file) where T : new();
     }
 }

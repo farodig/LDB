@@ -29,7 +29,7 @@ namespace LDB.Linq
             get
             {
                 if (_items == null)
-                    _items = Converter.Deserialize<List<T>>(DbPath);
+                    _items = Converter.Deserialize<List<T>>(DbPath) ?? new List<T>();
                 return _items;
             }
         }

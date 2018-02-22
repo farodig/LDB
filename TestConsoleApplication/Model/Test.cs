@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace TestConsoleApplication.Model
 {
-    public class Test : LTable
+    //[Serializable] // need for bin
+    public class Test// : LTable
     {
         public int Code { get; set; }
 

@@ -10,7 +10,7 @@ namespace LDB.Linq.Converters
 {
     internal class JsonConverter : IConverter
     {
-        public T Deserialize<T>(string file)
+        public T Deserialize<T>(string file) where T : new()
         {
             var serializer = new JavaScriptSerializer();
             using (var sr = new StreamReader(file))
@@ -19,7 +19,7 @@ namespace LDB.Linq.Converters
             }
         }
 
-        public void Serialize<T>(string file, T data)
+        public void Serialize<T>(string file, T data) where T : new()
         {
             var serializer = new JavaScriptSerializer();
             using (var sw = new StreamWriter(file))

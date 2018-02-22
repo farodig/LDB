@@ -10,7 +10,7 @@ namespace LDB.Linq.Converters
 {
     internal class CsvConverter : IConverter
     {
-        public T Deserialize<T>(string file)
+        public T Deserialize<T>(string file) where T : new()
         {
             CsvSerializer serializer = new CsvSerializer();
             using (FileStream fs = new FileStream(file, FileMode.OpenOrCreate))
@@ -19,7 +19,7 @@ namespace LDB.Linq.Converters
             }
         }
 
-        public void Serialize<T>(string file, T data)
+        public void Serialize<T>(string file, T data) where T : new()
         {
             CsvSerializer serializer = new CsvSerializer();
             using (FileStream fs = new FileStream(file, FileMode.OpenOrCreate))
