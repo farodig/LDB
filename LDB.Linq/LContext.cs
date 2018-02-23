@@ -14,8 +14,12 @@ using LDB.Linq.Converters;
 
 namespace LDB.Linq
 {
-    public class LContext// : IDisposable
+    /// <summary>
+    /// Storage context
+    /// </summary>
+    public class LContext : IDisposable
     {
+        #region Constructor parameters
         /// <summary>
         /// Path to data files (default: LocalDB)
         /// </summary>
@@ -31,29 +35,22 @@ namespace LDB.Linq
         /// </summary>
         private DataTypeEnum Type;
 
-        //https://stackoverflow.com/questions/18242429/how-to-deserialize-json-data
-        //https://msdn.microsoft.com/en-us/library/system.web.script.serialization.javascriptserializer.aspx
-        // System.Runtime.Serialization.Json
-        // System.Web.Script.Serialization
-        // TODO: Add parameter IsReadOnly
+        /// <summary>
+        /// Check is db for read only
+        /// </summary>
+        private bool IsReadOnly;
+        
         // TODO: Add parameter SaveAtOnce
+        #endregion
 
+        #region Constructors
         /// <summary>
         /// Default parameters
-        /// </summary>
-        /// <summary xml:lang="ru">
-        /// Параметры по умолчанию
-        /// </summary>
-        /// <summary xml:lang="ru-RU">
-        /// Параметры по умолчанию 1
-        /// </summary>
-        /// <summary xml:lang="fr">
-        /// Obtient ou définit la taille de remplissage de l'opération de chargement.
         /// </summary>
         public LContext()
         {
             SetDefaultValues();
-            //https://stackoverflow.com/questions/7299097/dynamically-replace-the-contents-of-a-c-sharp-method
+
             //ReplaceGetters();
             InitDbSet();
         }
@@ -69,14 +66,19 @@ namespace LDB.Linq
 
             InitDbSet();
             //https://stackoverflow.com/questions/7299097/dynamically-replace-the-contents-of-a-c-sharp-method
+            //https://stackoverflow.com/questions/35600329/get-method-name-of-property-setter-in-c-sharp
             //ReplaceGetters();
         }
+        #endregion
+
+        #region Private methods
 
         private void SetDefaultValues()
         {
             Path = "Data";
             Position = PositionTypeEnum.Relative;
             Type = DataTypeEnum.JSON;
+            IsReadOnly = false;
         }
 
         private string FileType => Type.ToString().ToLower();
@@ -95,6 +97,7 @@ namespace LDB.Linq
 
         private void InitDbSet()
         {
+            // Select converter
             IConverter converter;
             switch(Type)
             {
@@ -114,25 +117,22 @@ namespace LDB.Linq
                     converter = new XmlConverter();
                     break;
             }
-            var props = GetType().GetProperties();//.Select(a => a.GetType()).ToList() ;
+
+            var props = GetType().GetProperties();
             foreach(var prop in props)
             {
-                //if (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>))
-                //{
-                //    var value = prop.GetValue(this);
-                //    // Коллекция
-                    
-                //}
                 if (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>))
                 {
                     var value = prop.GetValue(this);
-                    value.GetType().GetMethod("SetDbPath").Invoke(value, new object[] { FilePath, FileType });
-                    value.GetType().GetMethod("SetDbConverter").Invoke(value, new object[] { converter });
-                    //var tmp = Convert.ChangeType(value, typeof(DbSet<LTable>));
-                    //.Cast<DbSet<LTable>>();//.ToList();
-                    //var items = ((IEnumerable)
-                    //paramDictionary.Add(prop.Name, string.Join(", ", items.Select(a => a.GetType().GetProperty("Oid").GetValue(a).ToString()).ToList()));
 
+                    // Set db path with data for collection
+                    value.GetType().GetMethod("SetDbPath").Invoke(value, new object[] { FilePath, FileType });
+
+                    // Set db converter for collection
+                    value.GetType().GetMethod("SetDbConverter").Invoke(value, new object[] { converter });
+
+                    // Set db parameter IsReadOnly
+                    value.GetType().GetMethod("SetIsReadOnly").Invoke(value, new object[] { IsReadOnly });
                 }
             }
 
@@ -166,11 +166,13 @@ namespace LDB.Linq
                             case "type":
                                 Type = (DataTypeEnum)Enum.Parse(typeof(DataTypeEnum), data[1], true);
                                 break;
+                            case "isreadonly":
+                                IsReadOnly = Boolean.Parse(data[1]);
+                                break;
                         }
                     }
                     catch (Exception parseAttribute)
                     {
-
                         throw new Exception($"Parse attribute ({attr}): {parseAttribute.Message}");
                     }
                 }
@@ -180,35 +182,17 @@ namespace LDB.Linq
                 throw new Exception($"Parse connection string: {parseError.Message}");
             }
         }
+        #endregion
 
+        #region IDisposable
+        public void Dispose()
+        {
+            // TODO write IDisposable of LContext, save?
+        }
+        #endregion
 
-        
-
-        //private void ReplaceGetters()
-        //{
-        //    //var properties = GetType().GetProperties().ToList();//.Where(a => a.PropertyType is typeof(List<LocalTable>))//BindingFlags.Public | BindingFlags.GetProperty
-        //    //foreach (var prop in properties)
-        //    //{
-        //    //    var tmp1 = prop.PropertyType;
-        //    //}
-        //}
-
-        //protected void SetTable<T>(ref List<T> table, List<T> value)
-        //{
-        //    //WriteTable(value);
-        //    //WriteJson(value);
-        //    //table = value;
-        //}
-
-        //protected List<T> GetTable<T>(ref List<T> table)
-        //{
-        //    //table = ReadTable<T>("");
-        //    //return table;
-        //    return null;
-        //}
-
-        //public virtual void Dispose()
-        //{
-        //}
+        #region Alternative way
+        //value.GetType().GetMethod(nameof(DbSet<object>.InitSomething)).Invoke(value, new object[] { value, FilePath, FileType });
+        #endregion
     }
 }

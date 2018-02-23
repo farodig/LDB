@@ -12,19 +12,18 @@ namespace TestConsoleApplication
         static void Main(string[] args)
         {
             // init
-            var db = new MyJsonContext();
-            
-            //db.Tests.Clear();
-
-            // first load collection and get max value
-            var maxValue = db.Tests.OrderBy(a => a.Code).LastOrDefault()?.Code ?? 0;//.Max(a => a.Code);
-
-            // add to collection and save file
-            db.Tests.Add(new Test
+            using (var db = new MyJsonContext())
             {
-                Code = ++maxValue,
-                Name = "Name " + maxValue
-            });
+                // first load collection and get max value
+                var maxValue = db.Tests.Max(a => (int?)a.Code) ?? 0;
+
+                // add to collection and save file
+                db.Tests.Add(new Test
+                {
+                    Code = ++maxValue,
+                    Name = "Name " + maxValue
+                });
+            }
         }
     }
 }

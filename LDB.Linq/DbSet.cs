@@ -19,9 +19,6 @@ namespace LDB.Linq
         private List<T> _items;
         private string DbPath;
         private IConverter Converter;
-
-        // TODO: Add IsReadOnly logic
-        private bool _isReadOnly = false;
         
         // Autoload collection
         private List<T> Items
@@ -53,7 +50,7 @@ namespace LDB.Linq
         public void SetDbConverter(IConverter converter) => Converter = converter;
 
         // Init IsReadOnly
-        public void SetIsReadOnly(bool key) => _isReadOnly = key; 
+        public void SetIsReadOnly(bool key) => IsReadOnly = key; 
         #endregion
 
         #region IList
@@ -64,7 +61,13 @@ namespace LDB.Linq
         public T this[int index]
         {
             get => Items[index]; 
-            set => Items[index] = value;
+            set
+            {
+                if (!IsReadOnly)
+                    Items[index] = value;
+                else
+                    throw new Exception("Data base is read only.");
+            }
         }
         
         /// <summary>
@@ -75,15 +78,19 @@ namespace LDB.Linq
         /// <summary>
         /// Check is read only collection
         /// </summary>
-        public bool IsReadOnly => _isReadOnly;
+        public bool IsReadOnly { get; private set; }
         
         /// <summary>
         /// Add item to collection
         /// </summary>
         public void Add(T item)
         {
-            Items.Add(item);
-            Converter.Serialize(DbPath, Items);
+            if (!IsReadOnly)
+            {
+                Items.Add(item);
+                Converter.Serialize(DbPath, Items);
+            } else
+                throw new Exception("Data base is read only.");
         }
         
         /// <summary>
@@ -91,8 +98,13 @@ namespace LDB.Linq
         /// </summary>
         public void Clear()
         {
-            Items.Clear();
-            Converter.Serialize(DbPath, Items);
+            if (!IsReadOnly)
+            {
+                Items.Clear();
+                Converter.Serialize(DbPath, Items);
+            }
+            else
+                throw new Exception("Data base is read only.");
         }
         
         /// <summary>
@@ -115,8 +127,13 @@ namespace LDB.Linq
         /// </summary>
         public void Insert(int index, T item)
         {
-            Items.Insert(index, item);
-            Converter.Serialize(DbPath, Items);
+            if (!IsReadOnly)
+            {
+                Items.Insert(index, item);
+                Converter.Serialize(DbPath, Items);
+            }
+            else
+                throw new Exception("Data base is read only.");
         }
 
         /// <summary>
@@ -124,9 +141,14 @@ namespace LDB.Linq
         /// </summary>
         public bool Remove(T item)
         {
-            bool result = Items.Remove(item);
-            Converter.Serialize(DbPath, Items);
-            return result;
+            if (!IsReadOnly)
+            {
+                bool result = Items.Remove(item);
+                Converter.Serialize(DbPath, Items);
+                return result;
+            }
+            else
+                throw new Exception("Data base is read only.");
         }
 
         /// <summary>
@@ -134,8 +156,13 @@ namespace LDB.Linq
         /// </summary>
         public void RemoveAt(int index)
         {
-            Items.RemoveAt(index);
-            Converter.Serialize(DbPath, Items);
+            if (!IsReadOnly)
+            {
+                Items.RemoveAt(index);
+                Converter.Serialize(DbPath, Items);
+            }
+            else
+                throw new Exception("Data base is read only.");
         }
 
         /// <summary>
@@ -147,6 +174,19 @@ namespace LDB.Linq
         /// Get enumerator from collection
         /// </summary>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        #endregion
+
+        #region Alternative way
+        //public static void InitSomething(ref DbSet<T> self, string path, string extension)
+        //{
+        //    var name = typeof(T).Name + "." + extension;
+        //    var fullName = Path.Combine(path, name);
+        //    if (!Directory.Exists(path))
+        //        Directory.CreateDirectory(path);
+        //    if (!File.Exists(fullName))
+        //        File.Create(fullName).Close();
+        //    self.DbPath = fullName;
+        //}
         #endregion
     }
 }
