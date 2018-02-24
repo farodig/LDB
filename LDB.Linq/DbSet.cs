@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +21,7 @@ namespace LDB.Linq
         private List<T> _items;
         private string DbPath;
         private IConverter Converter;
-        
+
         // Autoload collection
         private List<T> Items
         {
@@ -35,7 +37,7 @@ namespace LDB.Linq
         #region Setters
 
         // Init storage file
-        public void SetDbPath(string path, string extension)
+        private void SetDbPath(string path, string extension)
         {
             var name = typeof(T).Name + "." + extension;
             var fullName = Path.Combine(path, name);
@@ -47,10 +49,21 @@ namespace LDB.Linq
         }
 
         // Init converter type
-        public void SetDbConverter(IConverter converter) => Converter = converter;
+        private void SetDbConverter(IConverter converter) => Converter = converter;
 
         // Init IsReadOnly
-        public void SetIsReadOnly(bool key) => IsReadOnly = key; 
+        private void SetIsReadOnly(bool key) => IsReadOnly = key;
+
+
+        public DbSet(string FilePath, string FileType, IConverter converter, bool IsReadOnly)// )
+        {
+            SetDbPath(FilePath, FileType);
+
+            SetDbConverter(converter);
+
+            SetIsReadOnly(IsReadOnly);
+            //SetAttributes();
+        }
         #endregion
 
         #region IList
@@ -187,6 +200,42 @@ namespace LDB.Linq
         //        File.Create(fullName).Close();
         //    self.DbPath = fullName;
         //}
+        #endregion
+
+        #region Try
+
+        private void SetAttributes()//Type attributeType)
+        {
+            var type = typeof(T);
+            var aName = new AssemblyName("LDB.Linq");
+            var ab = AppDomain.CurrentDomain.DefineDynamicAssembly(aName, AssemblyBuilderAccess.Run);
+            var mb = ab.DefineDynamicModule(aName.Name);
+            var tb = mb.DefineType(type.Name + "Proxy", System.Reflection.TypeAttributes.Public, type);
+
+            var attrCtorParams = new Type[] { };// typeof(string) };
+            var attrCtorInfo = typeof(SerializableAttribute).GetConstructor(attrCtorParams);
+            var attrBuilder = new CustomAttributeBuilder(attrCtorInfo, new object[] { });// "Some Value" });
+            tb.SetCustomAttribute(attrBuilder);
+
+            var newType = tb.CreateType();
+
+
+            //Type genericType = typeof(DbSet<>).MakeGenericType(new Type[] { newType });
+            //var instance = Activator.CreateInstance(genericType);
+            //Type myParameterizedSomeClass = GetType().MakeGenericType(newType);
+            //ConstructorInfo constr = myParameterizedSomeClass.GetConstructor(new Type[] { });
+
+            //var tmp = constr.Invoke(new object[] { });
+            //var constructor = GetType().GetConstructor(new Type[] { });
+            //ConstructorInfo generic = constructor.
+            //generic
+
+            //MethodInfo method = typeof(Sample).GetMethod("GenericMethod");
+            //MethodInfo generic = method.MakeGenericMethod(myType);
+            //generic.Invoke(this, null);
+
+            //var instance = (DbSet<T>)Activator.CreateInstance(newType);
+        }
         #endregion
     }
 }

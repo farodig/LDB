@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace TestConsoleApplication.Model
 {
-    //[Serializable] // need for bin
-    public class Test// : LTable
+    // TODO: get rid of attribute. Need for bin converter. rewrite attribute | reflection
+    // https://stackoverflow.com/questions/14663763/how-to-add-an-attribute-to-a-property-at-runtime
+    //[Serializable] 
+    public class Test : LTable
     {
         public int Code { get; set; }
 

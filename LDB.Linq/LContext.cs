@@ -125,14 +125,29 @@ namespace LDB.Linq
                 {
                     var value = prop.GetValue(this);
 
+                    if (value == null)
+                    {
+                        Type itemType = prop.PropertyType.GetGenericArguments()[0];
+
+                        var genericType = typeof(DbSet<>).MakeGenericType(new Type[] { itemType });
+                        var instance = Activator.CreateInstance(genericType, new object[] { FilePath, FileType, converter, IsReadOnly });
+                        prop.SetValue(this, instance);
+                    }
+                    
+
+                    
+                    //prop.PropertyType
+
                     // Set db path with data for collection
-                    value.GetType().GetMethod("SetDbPath").Invoke(value, new object[] { FilePath, FileType });
+                    //value.GetType().GetMethod("SetDbPath").Invoke(value, new object[] { FilePath, FileType });
 
-                    // Set db converter for collection
-                    value.GetType().GetMethod("SetDbConverter").Invoke(value, new object[] { converter });
+                    //// Set db converter for collection
+                    //value.GetType().GetMethod("SetDbConverter").Invoke(value, new object[] { converter });
 
-                    // Set db parameter IsReadOnly
-                    value.GetType().GetMethod("SetIsReadOnly").Invoke(value, new object[] { IsReadOnly });
+                    //// Set db parameter IsReadOnly
+                    //value.GetType().GetMethod("SetIsReadOnly").Invoke(value, new object[] { IsReadOnly });
+
+                    //value.GetType().GetMethod("SetAttributes").Invoke(value, new object[] {});
                 }
             }
 

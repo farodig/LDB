@@ -10,7 +10,9 @@ namespace TestConsoleApplication
 {
     public class MyJsonContext : LContext
     {
-        public DbSet<Test> Tests { get; set; } = new DbSet<Test>();
+        public DbSet<Test> Tests { get; set; }
+        
+        //public DbSet<Test> Tests { get; set; } = new DbSet<Test>();
         //public List<Test> Tmp2 = new DbSet<Test>();
 
         //public List<Test> _tests;
