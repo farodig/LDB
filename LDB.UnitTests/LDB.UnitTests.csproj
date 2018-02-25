@@ -48,8 +48,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LocalContextTests.cs" />
-    <Compile Include="DbSetTests.cs" />
+    <Compile Include="JsonContextTests.cs" />
+    <Compile Include="LContextTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +59,10 @@
     <ProjectReference Include="..\LDB.Linq\LDB.Linq.csproj">
       <Project>{913AC2F7-D877-425E-8C7A-5B8139A12295}</Project>
       <Name>LDB.Linq</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestConsoleApplication\TestConsoleApplication.csproj">
+      <Project>{E7F4C63C-592F-4DAB-A784-714D9CBDCBE0}</Project>
+      <Name>TestConsoleApplication</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

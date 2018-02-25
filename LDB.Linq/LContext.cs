@@ -83,15 +83,24 @@ namespace LDB.Linq
 
         private string FileType => Type.ToString().ToLower();
 
+        private string _filePath;
+
         private string FilePath {
             get
             {
-                switch(Position)
+                if (string.IsNullOrEmpty(_filePath))
                 {
-                    case PositionTypeEnum.Absolute: return Path;
-                    case PositionTypeEnum.Relative: return System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Path); ;
-                    default: return Path;
+                    switch (Position)
+                    {
+                        case PositionTypeEnum.Absolute: _filePath = Path;
+                            break;
+                        case PositionTypeEnum.Relative: _filePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Path);
+                            break;
+                        default: _filePath = Path;
+                            break;
+                    }
                 }
+                return _filePath;
             }
         }
 
