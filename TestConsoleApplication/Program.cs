@@ -23,6 +23,13 @@ namespace TestConsoleApplication
                     Code = ++maxValue,
                     Name = "Name " + maxValue
                 });
+                
+                if (db.Tests.FirstOrDefault(a => a.Code == 1) is Test firstTest)
+                {
+                    firstTest.Name += "+";
+                    db.Tests.Save();
+                }
+                //db.CommitChanges();
             }
         }
     }

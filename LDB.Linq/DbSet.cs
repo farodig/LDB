@@ -34,6 +34,33 @@ namespace LDB.Linq
         }
         #endregion
 
+        #region Constructors
+        public DbSet(string FilePath, string FileType, IConverter converter, bool IsReadOnly)// )
+        {
+            SetDbPath(FilePath, FileType);
+
+            SetDbConverter(converter);
+
+            SetIsReadOnly(IsReadOnly);
+            //SetAttributes();
+        }
+        #endregion
+
+        #region Public methods
+        /// <summary>
+        /// Save table
+        /// </summary>
+        public void Save()
+        {
+            if (!IsReadOnly)
+                Converter.Serialize(DbPath, Items);
+            else
+                throw new Exception("Data base is read only.");
+        }
+        #endregion
+
+        #region Private methods
+
         #region Setters
 
         // Init storage file
@@ -53,17 +80,8 @@ namespace LDB.Linq
 
         // Init IsReadOnly
         private void SetIsReadOnly(bool key) => IsReadOnly = key;
+        #endregion
 
-
-        public DbSet(string FilePath, string FileType, IConverter converter, bool IsReadOnly)// )
-        {
-            SetDbPath(FilePath, FileType);
-
-            SetDbConverter(converter);
-
-            SetIsReadOnly(IsReadOnly);
-            //SetAttributes();
-        }
         #endregion
 
         #region IList

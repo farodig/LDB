@@ -71,6 +71,16 @@ namespace LDB.Linq
         }
         #endregion
 
+        #region Public methods
+        public void CommitChanges()
+        {
+            // Mark dbset table as changable
+
+            // TODO LContext.CommitChanges()
+            throw new NotImplementedException();
+        }
+        #endregion
+
         #region Private methods
 
         private void SetDefaultValues()
