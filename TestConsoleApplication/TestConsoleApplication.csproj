@@ -8,8 +8,9 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>TestConsoleApplication</RootNamespace>
     <AssemblyName>TestConsoleApplication</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LDB.Linq\LDB.Linq.csproj">
-      <Project>{913AC2F7-D877-425E-8C7A-5B8139A12295}</Project>
+      <Project>{BAE5DCCD-6830-41CB-82B4-186D1FF5B10B}</Project>
       <Name>LDB.Linq</Name>
     </ProjectReference>
   </ItemGroup>

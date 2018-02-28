@@ -222,38 +222,38 @@ namespace LDB.Linq
 
         #region Try
 
-        private void SetAttributes()//Type attributeType)
-        {
-            var type = typeof(T);
-            var aName = new AssemblyName("LDB.Linq");
-            var ab = AppDomain.CurrentDomain.DefineDynamicAssembly(aName, AssemblyBuilderAccess.Run);
-            var mb = ab.DefineDynamicModule(aName.Name);
-            var tb = mb.DefineType(type.Name + "Proxy", System.Reflection.TypeAttributes.Public, type);
+        //private void SetAttributes()//Type attributeType)
+        //{
+        //    var type = typeof(T);
+        //    var aName = new AssemblyName("LDB.Linq");
+        //    var ab = AppDomain.CurrentDomain.DefineDynamicAssembly(aName, AssemblyBuilderAccess.Run);
+        //    var mb = ab.DefineDynamicModule(aName.Name);
+        //    var tb = mb.DefineType(type.Name + "Proxy", System.Reflection.TypeAttributes.Public, type);
 
-            var attrCtorParams = new Type[] { };// typeof(string) };
-            var attrCtorInfo = typeof(SerializableAttribute).GetConstructor(attrCtorParams);
-            var attrBuilder = new CustomAttributeBuilder(attrCtorInfo, new object[] { });// "Some Value" });
-            tb.SetCustomAttribute(attrBuilder);
+        //    var attrCtorParams = new Type[] { };// typeof(string) };
+        //    var attrCtorInfo = typeof(SerializableAttribute).GetConstructor(attrCtorParams);
+        //    var attrBuilder = new CustomAttributeBuilder(attrCtorInfo, new object[] { });// "Some Value" });
+        //    tb.SetCustomAttribute(attrBuilder);
 
-            var newType = tb.CreateType();
+        //    var newType = tb.CreateType();
 
 
-            //Type genericType = typeof(DbSet<>).MakeGenericType(new Type[] { newType });
-            //var instance = Activator.CreateInstance(genericType);
-            //Type myParameterizedSomeClass = GetType().MakeGenericType(newType);
-            //ConstructorInfo constr = myParameterizedSomeClass.GetConstructor(new Type[] { });
+        //    //Type genericType = typeof(DbSet<>).MakeGenericType(new Type[] { newType });
+        //    //var instance = Activator.CreateInstance(genericType);
+        //    //Type myParameterizedSomeClass = GetType().MakeGenericType(newType);
+        //    //ConstructorInfo constr = myParameterizedSomeClass.GetConstructor(new Type[] { });
 
-            //var tmp = constr.Invoke(new object[] { });
-            //var constructor = GetType().GetConstructor(new Type[] { });
-            //ConstructorInfo generic = constructor.
-            //generic
+        //    //var tmp = constr.Invoke(new object[] { });
+        //    //var constructor = GetType().GetConstructor(new Type[] { });
+        //    //ConstructorInfo generic = constructor.
+        //    //generic
 
-            //MethodInfo method = typeof(Sample).GetMethod("GenericMethod");
-            //MethodInfo generic = method.MakeGenericMethod(myType);
-            //generic.Invoke(this, null);
+        //    //MethodInfo method = typeof(Sample).GetMethod("GenericMethod");
+        //    //MethodInfo generic = method.MakeGenericMethod(myType);
+        //    //generic.Invoke(this, null);
 
-            //var instance = (DbSet<T>)Activator.CreateInstance(newType);
-        }
+        //    //var instance = (DbSet<T>)Activator.CreateInstance(newType);
+        //}
         #endregion
     }
 }

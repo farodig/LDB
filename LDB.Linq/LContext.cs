@@ -1,15 +1,7 @@
 ﻿using LDB.Linq.Enums;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Serialization;
-using System.Web.Script.Serialization;
-using System.Runtime.Serialization.Json;
 using LDB.Linq.Converters;
 
 namespace LDB.Linq
@@ -87,7 +79,7 @@ namespace LDB.Linq
         {
             Path = "Data";
             Position = PositionTypeEnum.Relative;
-            Type = DataTypeEnum.JSON;
+            Type = DataTypeEnum.XML;
             IsReadOnly = false;
         }
 
@@ -126,9 +118,9 @@ namespace LDB.Linq
                 case DataTypeEnum.CSV:
                     converter = new CsvConverter();
                     break;
-                case DataTypeEnum.JSON:
-                    converter = new JsonConverter();
-                    break;
+                //case DataTypeEnum.JSON:
+                //    converter = new JsonConverter();
+                //    break;
                 case DataTypeEnum.XML:
                     converter = new XmlConverter();
                     break;
