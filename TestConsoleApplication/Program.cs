@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LDB.Linq.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace TestConsoleApplication
         static void Main(string[] args)
         {
             // init
-            using (var db = new MyJsonContext())
+            using (var db = new MyJsonContext(DataTypeEnum.BIN, "DataFolder", PositionTypeEnum.Relative, false))
             {
                 // first load collection and get max value
                 var maxValue = db.Tests.Max(a => (int?)a.Code) ?? 0;
@@ -23,7 +24,7 @@ namespace TestConsoleApplication
                     Code = ++maxValue,
                     Name = "Name " + maxValue
                 });
-                
+
                 if (db.Tests.FirstOrDefault(a => a.Code == 1) is Test firstTest)
                 {
                     firstTest.Name += "+";

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsoleApplication", "TestConsoleApplication\TestConsoleApplication.csproj", "{E7F4C63C-592F-4DAB-A784-714D9CBDCBE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LDB.Linq", "LDB.Linq\LDB.Linq.csproj", "{BAE5DCCD-6830-41CB-82B4-186D1FF5B10B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LDB.Linq", "LDB.Linq\LDB.Linq.csproj", "{BAE5DCCD-6830-41CB-82B4-186D1FF5B10B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

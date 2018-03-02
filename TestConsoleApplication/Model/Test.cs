@@ -9,7 +9,7 @@ namespace TestConsoleApplication.Model
 {
     // TODO: get rid of attribute. Need for bin converter. rewrite attribute | reflection
     // https://stackoverflow.com/questions/14663763/how-to-add-an-attribute-to-a-property-at-runtime
-    //[Serializable] 
+    [Serializable] 
     public class Test : LTable
     {
         public int Code { get; set; }

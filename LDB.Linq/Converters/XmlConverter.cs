@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace LDB.Linq.Converters
 {
-    internal class XmlConverter : IConverter
+    public class XmlConverter : IConverter
     {
         public T Deserialize<T>(string file) where T : new()
         {

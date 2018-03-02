@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LDB.Linq.Enums
 {
-    internal enum DataTypeEnum
+    public enum DataTypeEnum
     {
         JSON,
         XML,

@@ -3,13 +3,14 @@ using System;
 using System.Linq;
 using System.Reflection;
 using LDB.Linq.Converters;
+using System.IO;
 
 namespace LDB.Linq
 {
     /// <summary>
     /// Storage context
     /// </summary>
-    public class LContext : IDisposable
+    public abstract class LContext : IDisposable
     {
         #region Constructor parameters
         /// <summary>
@@ -31,7 +32,7 @@ namespace LDB.Linq
         /// Check is db for read only
         /// </summary>
         private bool IsReadOnly;
-        
+
         // TODO: Add parameter SaveAtOnce
         #endregion
 
@@ -42,8 +43,17 @@ namespace LDB.Linq
         public LContext()
         {
             SetDefaultValues();
+            
+            InitDbSet();
+        }
 
-            //ReplaceGetters();
+        public LContext(DataTypeEnum dataType, string path, PositionTypeEnum positionType, bool isReadOnly)
+        {
+            Path = path;
+            Position = positionType;
+            Type = dataType;
+            IsReadOnly = isReadOnly;
+
             InitDbSet();
         }
 
@@ -96,7 +106,7 @@ namespace LDB.Linq
                     {
                         case PositionTypeEnum.Absolute: _filePath = Path;
                             break;
-                        case PositionTypeEnum.Relative: _filePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Path);
+                        case PositionTypeEnum.Relative: _filePath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), Path);
                             break;
                         default: _filePath = Path;
                             break;
@@ -130,15 +140,18 @@ namespace LDB.Linq
             }
 
             var props = GetType().GetProperties();
-            foreach(var prop in props)
+            //var props = GetType().GetRuntimeProperties();
+            foreach (var prop in props)
             {
                 if (prop.PropertyType.IsGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>))
+                //if (prop.PropertyType.IsConstructedGenericType && prop.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>))
                 {
                     var value = prop.GetValue(this);
 
                     if (value == null)
                     {
                         Type itemType = prop.PropertyType.GetGenericArguments()[0];
+                        //Type itemType = prop.PropertyType.GenericTypeArguments[0];
 
                         var genericType = typeof(DbSet<>).MakeGenericType(new Type[] { itemType });
                         var instance = Activator.CreateInstance(genericType, new object[] { FilePath, FileType, converter, IsReadOnly });

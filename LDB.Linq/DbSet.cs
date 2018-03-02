@@ -71,7 +71,7 @@ namespace LDB.Linq
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
             if (!File.Exists(fullName))
-                File.Create(fullName).Close();
+                File.Create(fullName).Dispose();//.Close();
             DbPath = fullName;
         }
 
